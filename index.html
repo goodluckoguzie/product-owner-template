@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product Owner template</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <strong>Product Owner template</strong>
+      <span>Fill this before you build. Research is part of the job.</span>
+    </div>
+    <div class="actions">
+      <span class="progress"></span>
+      <button id="download" class="primary" type="button">Download project pack</button>
+      <button id="reset" class="quiet" type="button">Clear</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav>
+      <a href="#start">Start</a>
+      <a href="#questions">Five questions</a>
+      <a href="#research">Research</a>
+      <a href="#swot">SWOT</a>
+      <a href="#approach">How to build</a>
+      <a href="#value">Value</a>
+      <a href="#agreement">Agreement</a>
+      <a href="#backlog">Backlog</a>
+      <a href="#sprint">Sprint</a>
+      <a href="#constraints">Constraints</a>
+      <a href="#memory">Memory</a>
+    </nav>
+
+    <main>
+      <section class="hero" id="start">
+        <h1 class="banner">product brief</h1>
+        <p>Use this page once per product. Copy the repository, fill the stages in order, then download the pack into that product’s <code>docs</code> folder. The download is the paperwork. The code comes after it.</p>
+        <p class="note">Your answers stay in this browser until you clear them. Nothing is sent anywhere.</p>
+        <div id="start-fields"></div>
+      </section>
+
+      <section id="questions">
+        <h1 class="banner">five questions</h1>
+        <p>Answer these before you open a builder. The last one is as important as the first four.</p>
+        <div id="question-fields"></div>
+      </section>
+
+      <section id="research">
+        <h1 class="banner">research.md</h1>
+        <p>Study what already exists before you decide your features. Look past your own city: app stores, news, and websites.</p>
+        <ol class="steps">
+          <li>Find several real products. Three is the minimum.</li>
+          <li>Write each product’s features in plain words.</li>
+          <li>Merge the lists and count how often each feature appears.</li>
+          <li>If a feature name is vague, write one sentence so everyone means the same thing.</li>
+        </ol>
+        <h2>Existing solutions</h2>
+        <div data-repeat="solutions">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a solution</button>
+        </div>
+        <h2>Features you saw more than once</h2>
+        <div data-repeat="features">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a feature</button>
+        </div>
+      </section>
+
+      <section id="swot">
+        <h1 class="banner">swot.md</h1>
+        <p>This SWOT is about the products you just listed. Strengths and weaknesses are theirs. Opportunities are the gaps you can prove from that research. Threats wait until you have a product of your own.</p>
+        <div id="swot-fields"></div>
+      </section>
+
+      <section id="approach">
+        <h1 class="banner">how to build</h1>
+        <p>Pick the way of working from the evidence. A changing need wants short cycles. A settled need can be planned up front. If you still do not know whether anyone wants it, learn that before you build the rest.</p>
+        <table class="guide">
+          <thead><tr><th>When this is true</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>The requirements are clear, stable, and the technology is known.</td><td>Waterfall or incremental.</td></tr>
+            <tr><td>People need to use a slice before they can describe what they want.</td><td>A prototype, then stop and write the real scope.</td></tr>
+            <tr><td>You need a thin first release, with the customer close.</td><td>Rapid application development. Do not let the screen hide a weak core.</td></tr>
+            <tr><td>The work is large and each round has real risk.</td><td>Spiral. Revisit the risk before you build more.</td></tr>
+            <tr><td>A small team can ship often, and the needs will change.</td><td>Agile Scrum. You order the backlog and you accept the stories.</td></tr>
+            <tr><td>You still need to learn whether anyone wants this.</td><td>Lean. Build the smallest slice, measure, learn, then decide.</td></tr>
+          </tbody>
+        </table>
+        <label>Choice
+          <select id="buildChoice">
+            <option value="">Choose one</option>
+          </select>
+        </label>
+        <div id="approach-fields"></div>
+      </section>
+
+      <section id="value">
+        <h1 class="banner">value.md</h1>
+        <p>List the people who use it, or who gain when someone else uses it. Rank who tries it first. Walk through that person’s day before you name a feature.</p>
+        <div data-repeat="cohorts">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a person</button>
+        </div>
+        <div id="value-fields"></div>
+      </section>
+
+      <section id="agreement">
+        <h1 class="banner">working agreement</h1>
+        <p>The product owner orders the work and accepts a story when the acceptance lines are true. The person who runs the meetings does not overrule that. Anyone can propose a change to this agreement.</p>
+        <div data-repeat="team">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a person</button>
+        </div>
+        <div id="agreement-fields"></div>
+        <h2>A story is done when</h2>
+        <ol class="steps">
+          <li>The acceptance lines are met.</li>
+          <li>It has been tried on the real device or the real page.</li>
+          <li>Someone else has looked at it.</li>
+          <li>The tests that protect it pass.</li>
+          <li>Memory, tasks, and decisions are updated.</li>
+          <li>You accept it.</li>
+        </ol>
+      </section>
+
+      <section id="backlog">
+        <h1 class="banner">backlog.md</h1>
+        <p>Write stories only after the research, the SWOT, and the value proposition. One story is something a person can finish. “As a … I want … so that …” plus the lines that prove it, plus the test.</p>
+        <p class="warn" hidden></p>
+        <div data-repeat="stories">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a story</button>
+        </div>
+      </section>
+
+      <section id="sprint">
+        <h1 class="banner">sprint.md</h1>
+        <p>One goal. A week or two. Show the result. Then ask what to change. Leave the rest of the backlog outside this sprint on purpose.</p>
+        <div id="sprint-fields"></div>
+      </section>
+
+      <section id="constraints">
+        <h1 class="banner">constraints</h1>
+        <p>These files keep the build from drifting: how it should look, what the build must keep, the rules, who can see what, and what “working” means.</p>
+        <div id="constraint-fields" class="grid"></div>
+      </section>
+
+      <section id="memory">
+        <h1 class="banner">memory.md</h1>
+        <p>Decisions stay decided. Memory is only what is true today. After each accepted story, update both.</p>
+        <div data-repeat="decisions">
+          <div data-rows></div>
+          <button type="button" class="quiet" data-add>Add a decision</button>
+        </div>
+        <div id="memory-fields"></div>
+        <p class="note">Download gives you <code>docs/PRD.md</code>, <code>RESEARCH.md</code>, <code>SWOT.md</code>, <code>APPROACH.md</code>, <code>VALUE.md</code>, <code>WORKING_AGREEMENT.md</code>, <code>BACKLOG.md</code>, <code>SPRINT.md</code>, <code>DESIGN.md</code>, <code>RULES.md</code>, <code>SECURITY.md</code>, <code>TEST_PLAN.md</code>, <code>DECISIONS.md</code>, <code>MEMORY.md</code>, and <code>TASKS.md</code>.</p>
+      </section>
+    </main>
+  </div>
+  <script src="pack.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
