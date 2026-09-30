@@ -5,12 +5,12 @@
  */
 
 const BUILD_CHOICES = [
-  ["waterfall", "Waterfall or incremental. Requirements are clear, stable, and the technology is already known."],
-  ["prototype", "Prototype. People need to use a slice before they can say what they want. Stop and write the real scope before the prototype keeps growing."],
-  ["rad", "Rapid application development. A thin first release, with the customer in the room. Do not let the screen hide a weak core."],
-  ["spiral", "Spiral. The work is large and risky, so each round revisits the risk before more is built."],
-  ["scrum", "Agile Scrum. A small team can ship every week or two, and the needs will change."],
-  ["lean", "Lean. You still need to learn whether anyone wants this. Build the smallest slice, measure, learn, then decide."],
+  ["waterfall", "Waterfall or incremental", "Requirements are clear, stable, and the technology is already known."],
+  ["prototype", "Prototype, then write the scope", "People need to use a slice before they can say what they want. Stop the prototype before it becomes the product."],
+  ["rad", "Rapid first release", "A thin release, with the customer close. Do not let the screen hide a weak core."],
+  ["spiral", "Spiral", "The work is large and risky, so each round revisits the risk before more is built."],
+  ["scrum", "Agile Scrum", "A small team can ship often, and the needs will change. The product owner orders the backlog and accepts the stories."],
+  ["lean", "Lean: build, measure, learn", "You still need to learn whether anyone wants this. Build the smallest slice, measure, then decide."],
 ];
 
 function lines(value) {
@@ -26,7 +26,15 @@ function list(items, render) {
 
 function choiceLabel(id) {
   const found = BUILD_CHOICES.find((item) => item[0] === id);
-  return found ? found[1] : "_Not chosen yet._";
+  if (!found) return "_Not chosen yet._";
+  return `${found[1]}. ${found[2]}`;
+}
+
+function storyLine(row) {
+  if ((row.who || "").trim() || (row.want || "").trim() || (row.why || "").trim()) {
+    return `As a ${row.who || "…"}, I want ${row.want || "…"}, so that ${row.why || "…"}.`;
+  }
+  return (row.story || "").trim();
 }
 
 function prd(state) {
@@ -72,6 +80,7 @@ function research(state) {
   const solutions = list(state.solutions, (row) => {
     return `### ${row.name || "Unnamed solution"}
 - Link: ${row.url || "_none_"}
+- Where you saw it: ${row.source || "_none_"}
 - Who it is for: ${row.users || "_none_"}
 - Features: ${row.features || "_none_"}
 - Price: ${row.price || "_none_"}
@@ -154,7 +163,7 @@ ${lines(state.archConstraints)}
 
 function value(state) {
   const cohorts = list(state.cohorts, (row) => {
-    return `- **${row.rank || "?"}.** ${row.name || "Unnamed"} — ${row.why || "_why they matter_"}`;
+    return `- **${row.rank || "?"}.** ${row.name || "Unnamed"} — ${row.because || row.why || "_why they matter_"}`;
   });
   return `# Users and value
 
@@ -228,18 +237,32 @@ A story is done when all of these are true:
 `;
 }
 
+function risks(state) {
+  const rows = list(state.risks, (row) => {
+    return `### ${row.name || "Unnamed risk"}
+- How likely: ${row.chance || "_none_"}
+- How bad: ${row.impact || "_none_"}
+- What you will do: ${row.response || "_none_"}
+`;
+  });
+  return `# Risks
+
+A risk is something that could stop the outcome. Write the response now, not after it happens.
+
+${rows}
+`;
+}
+
 function backlog(state) {
   const stories = list(state.stories, (row, i) => {
+    const line = storyLine(row) || "_As a … I want … so that …_";
     return `### Story ${i + 1}
-${row.story || "_As a … I want … so that …_"}
+${line}
 
 Epic: ${row.epic || "_none_"}
 
 Acceptance:
 ${row.accept || "_none_"}
-
-Tasks:
-${row.tasks || "_none_"}
 
 Test:
 ${row.test || "_none_"}
@@ -388,9 +411,9 @@ ${lines(state.memoryNext)}
 }
 
 function tasks(state) {
-  const stories = (state.stories || []).filter((row) => (row.story || "").trim());
+  const stories = (state.stories || []).filter((row) => storyLine(row));
   const body = stories.length
-    ? stories.map((row, i) => `- [ ] Story ${i + 1}: ${(row.story || "").split("\n")[0]}`).join("\n")
+    ? stories.map((row, i) => `- [ ] Story ${i + 1}: ${storyLine(row)}`).join("\n")
     : "- [ ] Fill the backlog before creating tasks";
   return `# Tasks
 
@@ -411,11 +434,12 @@ Read in this order before writing code:
 1. PRD.md
 2. RESEARCH.md
 3. SWOT.md
-4. APPROACH.md
-5. VALUE.md
-6. WORKING_AGREEMENT.md
-7. BACKLOG.md
-8. SPRINT.md
+4. RISK.md
+5. APPROACH.md
+6. VALUE.md
+7. WORKING_AGREEMENT.md
+8. BACKLOG.md
+9. SPRINT.md
 
 Then build the first story only. Update MEMORY.md and TASKS.md when it is accepted.
 `;
@@ -427,6 +451,7 @@ function filesFromState(state) {
     ["PRD.md", prd(state)],
     ["RESEARCH.md", research(state)],
     ["SWOT.md", swot(state)],
+    ["RISK.md", risks(state)],
     ["APPROACH.md", approach(state)],
     ["VALUE.md", value(state)],
     ["WORKING_AGREEMENT.md", agreement(state)],

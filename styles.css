@@ -95,7 +95,13 @@ nav a {
 nav a:hover,
 nav a.active { background: #fff; }
 
-main { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+nav a.done { box-shadow: inset 3px 0 0 var(--green); }
+
+main { min-width: 0; }
+
+main > section { display: none; }
+
+main > section.on { display: block; }
 
 .hero, section {
   background: var(--card);
@@ -159,7 +165,47 @@ input, textarea, select {
   background: #fff;
 }
 
-textarea { min-height: 6.5rem; resize: vertical; }
+textarea { min-height: 4.2rem; resize: vertical; }
+
+textarea.tall { min-height: 7.5rem; }
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
+}
+
+.canvas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.side {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.2rem 0.8rem 0.8rem;
+  background: #fffaf1;
+}
+
+#briefs { max-width: 12rem; }
+
+.pager {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  position: sticky;
+  bottom: 0.6rem;
+  padding: 0.7rem 0.8rem;
+  background: rgba(255, 253, 248, 0.96);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
 
 .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
 
@@ -203,12 +249,13 @@ table.guide td {
     padding-bottom: 0.3rem;
   }
   nav a { white-space: nowrap; }
-  .grid { grid-template-columns: 1fr; }
+  .grid, .canvas { grid-template-columns: 1fr; }
   .top { align-items: flex-start; flex-direction: column; }
 }
 
 @media print {
-  .top, nav, .actions, button { display: none !important; }
+  .top, nav, .actions, .pager, button { display: none !important; }
+  main > section { display: block !important; }
   body { background: white; }
   .layout { display: block; }
   section, .hero { box-shadow: none; break-inside: avoid; }
