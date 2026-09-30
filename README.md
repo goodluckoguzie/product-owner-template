@@ -1,8 +1,12 @@
 # Product Owner template
 
+Open the form here: **https://goodluckoguzie.github.io/product-owner-template/**
+
+The `index.html` file in this repository is the source. GitHub shows that as code. The address above is the page you fill in.
+
 A one-page brief you fill in before a build. Research is part of the template, not a step you skip.
 
-Open `index.html`, or the GitHub Pages site, and work in this order:
+Work in this order:
 
 1. Five questions, including what is out of scope
 2. Existing solutions, then a merged feature list
